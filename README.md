@@ -1,74 +1,71 @@
-# Screen Time & Sleep — The Complete Study
+# Screen Time & Sleep — A Multi-Dataset Statistical Study
 
-> Does daily screen time predict how long students sleep? A three-act research arc: a 30-student pilot, a powered main study (in data collection), and replication on US national data — plus an external validation on 996 students. Fully reproducible: `src/`, tests, CI, SQL.
+> Does screen use before bedtime cost students sleep? A complete statistical investigation — from a 30-student pilot to a 996-student analysis — engineered as a reproducible product: SQL layer, automated tests, CI, and a pre-registered follow-up study in flight.
 
 ![tests](https://github.com/VrundaJoshi25/screen-time-sleep-analysis/actions/workflows/ci.yml/badge.svg)
 
-## The arc
+## Headline findings (completed work)
 
-| Act | Study | n | Status | Headline |
-|---|---|---|---|---|
-| 1 | **Pilot** (DAU stratified survey, paired exam/regular weeks) | 30 | ✅ done | screen slope ≈ 0, ns — but only ~8% power; exam week −1.15 h sleep (workload-driven) |
-| — | **External validation** (Mendeley student survey) | 996 | ✅ done | ρ = +0.23, +0.38 h per frequency level (positive; confounder-adjusted +0.19) |
-| 2 | **Main study** (pre-registered, quota 25×4, phone-log screen time) | ~100 | 🔄 collecting | designed & powered (87% at r = 0.3); form ready |
-| 3 | **National replication** (NHANES 2015-16, survey-weighted) | 5,944 | ✅ done | +1.3 min sleep per screen-hour (p = .0005) — practically zero; 18–29 y: ≈ 0, ns |
+| Study | n | Result |
+|---|---|---|
+| **Pilot** (DAU stratified survey, paired exam/regular weeks) | 30 | screen → sleep slope ≈ 0 (p = 0.58 / 0.90); exam-week sleep drops **−1.15 h** with barely any change in screen time → workload, not screens |
+| **Main analysis** (Mendeley student survey, CC BY 4.0) | 996 | **positive** association: ρ = +0.23 (p ≈ 2×10⁻¹³); +0.38 h per screen-frequency level, **+0.19 h after confounder control** |
 
-**The evidence so far, in one sentence:** across three real datasets there is no
-evidence that screen time costs students sleep — the powered national estimate is
-a practically negligible **+1.3 minutes of sleep per hour of daily screen time**,
-and the largest effects appear only where confounding (schedule flexibility) can operate.
+**The story the data tells:** the popular claim "bedtime scrolling costs sleep" is *not*
+supported by either dataset. The only positive screen–sleep association we found halves
+under adjustment for caffeine/stress/activity — consistent with an unmeasured confounder
+(**schedule flexibility**: students who can sleep late do both), identified a priori in our
+causal DAG.
 
-## Repository structure
+**What the analysis includes** (all in `replication_mendeley/`, full write-up in
+[`replication_mendeley/REPORT.md`](replication_mendeley/REPORT.md)):
+data-quality screening · EDA with group-size-aware inference (Welch tests) · Spearman/Pearson/
+ordinal-logistic triangulation · OLS with HC3 robust SEs · residual & Cook's-distance
+diagnostics · confounding control (MLR) · MCAR/MAR/MNAR missing-data simulation on real data ·
+causal DAG with back-door analysis · cross-study comparison.
+
+## Engineering (why this is a product, not homework)
 
 ```
-├── notebooks/                    Act 1 pilot notebook (SLR/MLR, diagnostics, MCAR/MAR/MNAR)
-├── replication_mendeley/         External validation sub-project (996 students): REPORT.md,
-│                                 full pipeline (prepare_data → phase6), figures, results
-├── docs/
-│   ├── preregistration.md        Act 2 hypotheses + analysis plan, fixed BEFORE data collection
-│   ├── google_form_spec.md       copy-paste-ready questionnaire (12 questions, quota plan)
-│   ├── nhanes_dictionary.md      NHANES variable dictionary + cycle-choice rationale
-│   └── nhanes_quick_results.txt  weighted national estimates
-├── data/
-│   ├── raw/nhanes/               NHANES 2015-2016 XPT files (never edited)
-│   └── clean/                    nhanes_work.csv (built by src/nhanes_build.py), SQLite db
-├── src/                          reusable code: cleaning.py (main study), nhanes pipeline
-├── tests/                        pytest suite for cleaning rules (5 tests)
-├── sql/                          analysis.sql (main study), analysis_nhanes.sql, run_sql.py
-├── .github/workflows/ci.yml      tests run on every push (badge above)
-└── requirements.txt              pinned versions
+├── notebooks/                pilot analysis notebook (SLR/MLR, diagnostics, MCAR/MAR/MNAR)
+├── replication_mendeley/     main analysis sub-project: REPORT.md, 9-script pipeline, figures
+├── src/                      reusable code: cleaning.py (typed rulebook), NHANES pipeline
+├── tests/                    pytest suite for cleaning rules — 5 tests
+├── sql/                      analysis.sql + run_sql.py — every question answered twice (pandas + SQL)
+├── docs/                     preregistration.md · google_form_spec.md · nhanes_dictionary.md
+├── data/raw|clean/           raw data (never edited) → cleaned outputs built by code
+├── .github/workflows/ci.yml  tests run on every push (badge above)
+└── requirements.txt          pinned versions
 ```
-
-## Key results (all numbers traceable to files above)
-
-**Act 3 — NHANES 2015-16** (weighted, adults 18+, n = 5,944): sleep = **+0.022 h per
-screen-hour** (robust 95% CI [+0.010, +0.034]; adjusted for age/gender +0.023). Young
-adults 18–29 (n = 1,244): +0.014 h, CI [−0.013, +0.042], p = 0.31 — the whole CI sits
-inside the pre-registered equivalence margin (±10 min/h): **a national equivalence result.**
-
-**External validation** (996 students): positive association (ρ = +0.23) that halves
-after adjustment (+0.383 → +0.185 h/level) — consistent with confounding by
-*schedule flexibility* (see the DAG in `replication_mendeley/`).
-
-**Act 1 pilot** (30 students, paired): slope ≈ 0 (p = 0.58/0.90); exam-week sleep
-drops 1.15 h while screen time barely moves.
-
-## Reproduce
 
 ```bash
 python -m venv .venv && .venv\Scripts\activate
 pip install -r requirements.txt
-python -m pytest tests/ -q            # cleaning-rule tests
-python sql/run_sql.py                 # SQL layer on NHANES (GROUP BY / CTE / window)
-python src/nhanes_build.py            # rebuild NHANES working data + weighted models
-cd replication_mendeley && python prepare_data.py   # external-validation pipeline
+python -m pytest tests/ -q                  # cleaning-rule tests
+python sql/run_sql.py                       # SQL layer (GROUP BY / CTE / window functions)
+cd replication_mendeley && python prepare_data.py   # full main-analysis pipeline
 ```
+
+## In progress / future work
+
+- **Pre-registered main study (n ≥ 100, data collection underway).** Quota-balanced
+  (25 per stratum: gender × year-group), phone-log screen time instead of recalled guesses,
+  87% power at r = 0.3. Hypotheses and analysis plan are locked in
+  [`docs/preregistration.md`](docs/preregistration.md); questionnaire is copy-paste ready in
+  [`docs/google_form_spec.md`](docs/google_form_spec.md). Planned outputs: SLR/MLR with
+  bootstrap CIs, equivalence testing against a pre-registered ±10 min/h margin, SQL layer on
+  the new data.
+- **NHANES national dataset (under evaluation).** 2015–2016 cycle already downloaded and
+  preliminarily analyzed (`data/raw/nhanes/`, `docs/nhanes_dictionary.md`,
+  `docs/nhanes_quick_results.txt`; ~5,944 weighted adults). Integration into the comparison
+  is a deliberate, pending decision — measurement differences (TV/computer hours vs student
+  phone use) and the right age frame are being evaluated first. Planned: age-stratified
+  analysis and design-based standard errors.
+- **Longer term:** objective phone-log screen measurement at scale; live dashboard.
 
 ## Data sources
 
 1. Lamba, Garg, Singh, Joshi — *DAU pilot survey* (IT590, Winter 2026), n = 30.
 2. Abdullah, A. — *Student Insomnia & Educational Outcomes Dataset*, Mendeley Data,
-   DOI 10.17632/5mvrx4v62z.2 (CC BY 4.0), n = 996.
-3. CDC/NCHS — *NHANES 2015-2016* (DEMO_I, SLQ_I, PAQ_I), public use,
-   https://wwwn.cdc.gov/nchs/nhanes/ (cycle chosen because it retains the dedicated
-   TV/computer screen-time questions PAQ710/PAQ715).
+   DOI [10.17632/5mvrx4v62z.2](https://doi.org/10.17632/5mvrx4v62z.2) (CC BY 4.0), n = 996.
+3. CDC/NCHS — *NHANES 2015–2016* (DEMO_I, SLQ_I, PAQ_I), public use — currently exploratory.
