@@ -1,0 +1,120 @@
+CORRELATIONS (screen_freq vs sleep):
+  Pearson  r   = +0.3537 (p = 1.02e-30)   [on midpoint hours]
+  Spearman rho = +0.2300 (p = 2.03e-13)   [rank-based, primary for ordinal data]
+  Kendall  tau = +0.2122 (p = 1.66e-13)
+
+OLS: sleep_hours = b0 + b1 * screen_freq
+  b0 (intercept) = 6.139  (SE 0.134)
+  b1 (screen)    = +0.383 hours per screen-frequency level (SE 0.032)
+  t = 11.92, p = 1.02e-30, 95% CI [0.320, 0.446]
+  R^2 = 0.1251  (screen use explains 12.5% of sleep-duration variance)
+  RMSE = 0.878 hours
+
+ORDINAL LOGISTIC (sleep category ~ screen_freq):
+  coef = +0.6750 (SE 0.0789, p = 1.19e-17)
+  odds ratio per level = 1.964  -> each step up in screen frequency multiplies the
+  odds of being in a LONGER sleep category by 1.96
+
+DIAGNOSTICS for OLS sleep_hours ~ screen_freq (n=996)
+
+Breusch-Pagan heteroscedasticity test: LM=94.8, p=2.07e-22 -> variance NOT constant
+Residual SD by screen group:
+               std  count
+screen_freq              
+1.0          2.225     17
+2.0          1.537     43
+3.0          1.327    107
+4.0          0.725    508
+5.0          0.615    321
+
+|standardized residual| > 2: 43 of 996 (4.3%; ~5% expected under normality)
+
+Cook's D: threshold 4/n = 0.0040; max = 0.1131
+Top 8 observations:
+  obs 957  screen=1 sleep=3.0h  resid=-3.52  leverage=0.0137  CookD=0.1131
+  obs 926  screen=1 sleep=3.0h  resid=-3.52  leverage=0.0137  CookD=0.1131
+  obs 922  screen=1 sleep=3.0h  resid=-3.52  leverage=0.0137  CookD=0.1131
+  obs 951  screen=1 sleep=3.0h  resid=-3.52  leverage=0.0137  CookD=0.1131
+  obs 659  screen=2 sleep=3.0h  resid=-3.90  leverage=0.0068  CookD=0.0680
+  obs 684  screen=2 sleep=3.0h  resid=-3.90  leverage=0.0068  CookD=0.0680
+  obs 990  screen=1 sleep=4.5h  resid=-2.02  leverage=0.0137  CookD=0.0373
+  obs 975  screen=1 sleep=4.5h  resid=-2.02  leverage=0.0137  CookD=0.0373
+Note: leverage is IDENTICAL within each screen group (x has 5 levels),
+so influence is a GROUP property, not an individual-row property.
+
+Leave-one-GROUP-out (refit without each screen group):
+  drop group 1 (n= 17): slope +0.3829 -> +0.3380  (change -0.0449, -11.7%)
+  drop group 2 (n= 43): slope +0.3829 -> +0.3539  (change -0.0291, -7.6%)
+  drop group 3 (n=107): slope +0.3829 -> +0.3913  (change +0.0084, 2.2%)
+  drop group 4 (n=508): slope +0.3829 -> +0.3930  (change +0.0101, 2.6%)
+  drop group 5 (n=321): slope +0.3829 -> +0.5244  (change +0.1414, 36.9%)
+
+ROBUST (HC3) inference for slope: b1=+0.3829, robust SE=0.0532, t=7.20, p=5.88e-13, 95% CI [0.279, 0.487]
+
+DIAGNOSTICS for OLS sleep_hours ~ screen_freq (n=996)
+
+Breusch-Pagan heteroscedasticity test: LM=94.8, p=2.07e-22 -> variance NOT constant
+Residual SD by screen group:
+               std  count
+screen_freq              
+1.0          2.225     17
+2.0          1.537     43
+3.0          1.327    107
+4.0          0.725    508
+5.0          0.615    321
+
+|standardized residual| > 2: 43 of 996 (4.3%; ~5% expected under normality)
+
+Cook's D: threshold 4/n = 0.0040; max = 0.1131
+Top 8 observations:
+  obs 957  screen=1 sleep=3.0h  resid=-3.52  leverage=0.0137  CookD=0.1131
+  obs 926  screen=1 sleep=3.0h  resid=-3.52  leverage=0.0137  CookD=0.1131
+  obs 922  screen=1 sleep=3.0h  resid=-3.52  leverage=0.0137  CookD=0.1131
+  obs 951  screen=1 sleep=3.0h  resid=-3.52  leverage=0.0137  CookD=0.1131
+  obs 659  screen=2 sleep=3.0h  resid=-3.90  leverage=0.0068  CookD=0.0680
+  obs 684  screen=2 sleep=3.0h  resid=-3.90  leverage=0.0068  CookD=0.0680
+  obs 990  screen=1 sleep=4.5h  resid=-2.02  leverage=0.0137  CookD=0.0373
+  obs 975  screen=1 sleep=4.5h  resid=-2.02  leverage=0.0137  CookD=0.0373
+Note: leverage is IDENTICAL within each screen group (x has 5 levels),
+so influence is a GROUP property, not an individual-row property.
+
+Leave-one-GROUP-out (refit without each screen group):
+  drop group 1 (n= 17): slope +0.3829 -> +0.3380  (change -0.0449, -11.7%)
+  drop group 2 (n= 43): slope +0.3829 -> +0.3539  (change -0.0291, -7.6%)
+  drop group 3 (n=107): slope +0.3829 -> +0.3913  (change +0.0084, 2.2%)
+  drop group 4 (n=508): slope +0.3829 -> +0.3930  (change +0.0101, 2.6%)
+  drop group 5 (n=321): slope +0.3829 -> +0.5244  (change +0.1414, 36.9%)
+
+DIAGNOSTICS for OLS sleep_hours ~ screen_freq (n=996)
+
+Breusch-Pagan heteroscedasticity test: LM=94.8, p=2.07e-22 -> variance NOT constant
+Residual SD by screen group:
+               std  count
+screen_freq              
+1.0          2.225     17
+2.0          1.537     43
+3.0          1.327    107
+4.0          0.725    508
+5.0          0.615    321
+
+|standardized residual| > 2: 43 of 996 (4.3%; ~5% expected under normality)
+
+Cook's D: threshold 4/n = 0.0040; max = 0.1131
+Top 8 observations:
+  obs 957  screen=1 sleep=3.0h  resid=-3.52  leverage=0.0137  CookD=0.1131
+  obs 926  screen=1 sleep=3.0h  resid=-3.52  leverage=0.0137  CookD=0.1131
+  obs 922  screen=1 sleep=3.0h  resid=-3.52  leverage=0.0137  CookD=0.1131
+  obs 951  screen=1 sleep=3.0h  resid=-3.52  leverage=0.0137  CookD=0.1131
+  obs 659  screen=2 sleep=3.0h  resid=-3.90  leverage=0.0068  CookD=0.0680
+  obs 684  screen=2 sleep=3.0h  resid=-3.90  leverage=0.0068  CookD=0.0680
+  obs 990  screen=1 sleep=4.5h  resid=-2.02  leverage=0.0137  CookD=0.0373
+  obs 975  screen=1 sleep=4.5h  resid=-2.02  leverage=0.0137  CookD=0.0373
+Note: leverage is IDENTICAL within each screen group (x has 5 levels),
+so influence is a GROUP property, not an individual-row property.
+
+Leave-one-GROUP-out (refit without each screen group):
+  drop group 1 (n= 17): slope +0.3829 -> +0.3380  (change -0.0449, -11.7%)
+  drop group 2 (n= 43): slope +0.3829 -> +0.3539  (change -0.0291, -7.6%)
+  drop group 3 (n=107): slope +0.3829 -> +0.3913  (change +0.0084, 2.2%)
+  drop group 4 (n=508): slope +0.3829 -> +0.3930  (change +0.0101, 2.6%)
+  drop group 5 (n=321): slope +0.3829 -> +0.5244  (change +0.1414, 36.9%)

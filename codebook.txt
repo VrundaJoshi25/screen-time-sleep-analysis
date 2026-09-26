@@ -1,0 +1,27 @@
+CODEBOOK - analysis_data.csv  (n = 996 students)
+Source: Mendeley Data DOI 10.17632/5mvrx4v62z.2 (CC BY 4.0)
+
+IDENTIFIERS / DEMOGRAPHICS
+  year                First year | Second year | Third year | Graduate student
+  gender              Male | Female
+
+KEY VARIABLES (coded)
+  screen_freq_cat     original label: how often devices used before sleep
+  screen_freq         1=Never 2=Rarely(1-2/wk) 3=Sometimes(3-4/wk) 4=Often(5-6/wk) 5=Every night
+  sleep_cat           original label: average hours of sleep per day
+  sleep_ord           1=<4h 2=4-5h 3=6-7h 4=7-8h 5=>8h
+  sleep_hours         midpoint of range: 3.0, 4.5, 6.5, 7.5, 8.5
+  caffeine            1=Never ... 5=Every day   (caffeine to stay awake/alert)
+  activity            1=Never ... 5=Every day   (physical activity/exercise)
+  stress              1=No 2=Low 3=High 4=Extremely high  (academic-workload stress)
+
+SECONDARY (coded the same way)
+  insomnia, awakenings, concentration, fatigue, skip_classes  1..5 frequency
+  sleep_quality       1=Very poor .. 5=Very good
+  deadline_impact     1=No impact .. 5=Severe impact
+  performance         1=Poor .. 5=Excellent (self-rated last semester)
+
+NOTES
+  - All variables are self-reported survey answers (single sitting, retrospective).
+  - sleep_hours is an approximation (range midpoints); sleep_ord keeps the original
+    ordinal information for rank-based methods.

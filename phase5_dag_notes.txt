@@ -1,0 +1,29 @@
+CAUSAL DAG - notes
+==================
+Back-door paths from Screen use to Sleep duration:
+  1. Screen <- Schedule flexibility -> Sleep          (KEY, unmeasured)
+  2. Screen <- Academic stress/workload -> Sleep      (measured: adjusted in MLR)
+  3. Screen <- Caffeine -> Sleep                      (measured: adjusted)
+  4. Screen <- Year -> Schedule flexibility -> Sleep  (year partially proxies flexibility)
+  5. Screen <- Year -> Sleep                          (adjusted in MLR2)
+
+Minimal adjustment set (if all measured): {Schedule flexibility, Stress} or
+{Schedule flexibility, Year, Caffeine}. BUT schedule flexibility is NOT in the
+survey, so full adjustment is impossible with this dataset.
+
+Interpretation of results in causal terms:
+  - Unadjusted association: +0.383 h/level.
+  - After adjusting for measured confounders (caffeine, activity, stress,
+    year, gender): +0.185 h/level (48% attenuated) -> paths 2,3,5 carried
+    about half the raw association.
+  - The remaining +0.185 CANNOT be given a causal reading: path 1
+    (schedule flexibility) remains unblocked, and domain knowledge says it
+    is strong (students with free mornings both binge screens nightly and
+    sleep long). Reverse causation (people who sleep late use screens
+    longer) is also plausible.
+  - Physical activity enters only as a cause of sleep (protective),
+    not a confounder of the screen-sleep path.
+
+Conclusion: report an ASSOCIATION, not an effect. To identify the causal
+effect one needs to measure schedule flexibility (first-class time,
+commute, chronotype) or randomize bedtime screen use.

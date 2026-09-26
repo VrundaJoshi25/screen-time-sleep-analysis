@@ -1,0 +1,18 @@
+FULL DATA truth: slope = +0.3829 (SE 0.0321)
+
+MCAR (missing n=103, 10.3%):
+  complete-case      slope=+0.3911 (SE 0.0346)  bias=+0.0081
+  mean imputation    slope=+0.3911 (SE 0.0353)  bias=+0.0081
+  cond-mean imput.   slope=+0.3983 (SE 0.0346)  bias=+0.0154
+
+MAR (missing n=128, 12.9%):
+  complete-case      slope=+0.3842 (SE 0.0343)  bias=+0.0012
+  mean imputation    slope=+0.3842 (SE 0.0344)  bias=+0.0012
+  cond-mean imput.   slope=+0.3821 (SE 0.0341)  bias=-0.0008
+  (check: missing rate among stress=4 students = 0.20)
+
+MNAR (missing n=123, 12.3%):
+  complete-case      slope=+0.3935 (SE 0.0347)  bias=+0.0105
+  mean imputation    slope=+0.3935 (SE 0.0347)  bias=+0.0105
+  cond-mean imput.   slope=+0.4012 (SE 0.0342)  bias=+0.0182
+  (check: missing rate among every-night users = 0.28; observed x-mean drops 4.08 -> 3.99)

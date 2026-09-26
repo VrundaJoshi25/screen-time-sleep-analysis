@@ -1,0 +1,24 @@
+CLEAN ANALYSIS DATASET: n = 996, 29 columns
+Missing values: 0 | Full duplicates: 18
+
+CROSS-TAB: device use before sleep (rows) x sleep duration (cols), counts
+sleep_cat                     Less than 4 hours  4-5 hours  6-7 hours  7-8 hours  More than 8 hours
+screen_freq_cat                                                                                    
+Never                                         4          3          3          2                  5
+Rarely (1-2 times a week)                     2          8          6         21                  6
+Sometimes (3-4 times a week)                  3          8         19         39                 38
+Often (5-6 times a week)                      2          6         23        293                184
+Every night                                   0          2          9        153                157
+
+MEAN sleep_hours (midpoint) by screen-use frequency:
+             count   mean    std
+screen_freq                     
+1               17  6.029  2.225
+2               43  6.733  1.537
+3              107  7.327  1.327
+4              508  7.764  0.725
+5              321  7.942  0.615
+
+Spearman rho(screen_freq, sleep_hours) = 0.2300  (p = 2.026e-13)
+Spearman rho(screen_freq, sleep_quality) = 0.0404  (p = 0.2023)
+Kruskal-Wallis across the 5 screen groups: H = 63.87, p = 4.46e-13

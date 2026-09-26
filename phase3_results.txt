@@ -1,0 +1,24 @@
+SLR (unadjusted): screen coef = +0.3829 (robust SE 0.0532, t=7.20, p=5.88e-13, CI[0.279, 0.487]), R2=0.125
+MLR1 (+ caffeine, activity, stress): screen coef = +0.1977 (robust SE 0.0561, t=3.52, p=0.000425, CI[0.088, 0.308]), R2=0.179
+MLR2 (+ year, gender): screen coef = +0.1846 (robust SE 0.0550, t=3.35, p=0.000798, CI[0.077, 0.292]), R2=0.194
+
+MLR1 full table (robust SEs):
+  screen_freq  +0.1977  (SE 0.0561, p=0.000425)
+  caffeine     +0.2495  (SE 0.0526, p=2.09e-06)
+  activity     +0.0879  (SE 0.0504, p=0.0814)
+  stress       +0.0409  (SE 0.0593, p=0.49)
+MLR2 full table (robust SEs):
+  C(year)[T.Graduate student]  +0.2343  (SE 0.3510, p=0.504)
+  C(year)[T.Second year]       +0.1288  (SE 0.3782, p=0.733)
+  C(year)[T.Third year]        +0.0861  (SE 0.3546, p=0.808)
+  C(gender)[T.Male]            +0.1863  (SE 0.0671, p=0.00547)
+  screen_freq                  +0.1846  (SE 0.0550, p=0.000798)
+  caffeine                     +0.2373  (SE 0.0534, p=8.7e-06)
+  activity                     +0.0727  (SE 0.0510, p=0.154)
+  stress                       +0.0350  (SE 0.0600, p=0.56)
+
+ORDINAL LOGISTIC (multivariate):
+  screen_freq  +0.2757 (SE 0.0950, p=0.0037)  OR=1.317
+  caffeine     +0.5060 (SE 0.0962, p=1.43e-07)  OR=1.659
+  activity     +0.2039 (SE 0.0954, p=0.0326)  OR=1.226
+  stress       +0.1995 (SE 0.1121, p=0.0751)  OR=1.221

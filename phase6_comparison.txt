@@ -1,0 +1,41 @@
+CROSS-STUDY COMPARISON - DAU pilot vs independent replication
+================================================================
+
+                        DAU pilot (own study)          Mendeley replication
+----------------------  ---------------------------    ---------------------------
+Sample                  n = 30, DAU (India)            n = 996, DIU (Bangladesh)
+Design                  paired: exam + regular week    cross-sectional
+Screen-time measure     MINUTES before sleep           FREQUENCY (nights/week)
+Sleep measure           hours (self-reported)          hours in ranges (midpoints)
+
+SLR slope (screen)      exam:    -0.0014 (p=0.58)      +0.383 h/level (p=2e-30)
+                        regular: -0.0005 (p=0.90)
+95% CI (exam)           [-0.0063, 0.0036]  [0.279, 0.487]
+Correlation             r = -0.105 / -0.024 (ns)       Spearman rho = +0.230 (p=2e-13)
+R^2                     0.011 / 0.001                  0.125
+Adjusted (MLR)          screen coef ~ 0 (ns)           +0.185 h/level (p=8e-04)
+Statistical power       ~8% (needs n~711 for r=-0.105) >99% for rho=0.23 at n=996
+
+Sleep by week type      exam 5.63h < regular 6.78h     (no week-type measured)
+(-1.15h in exam week while screen time rose only +17min)
+
+WHY THE TWO STUDIES CAN BOTH BE "RIGHT"
+1. Power: the DAU pilot's CI for the exam-week slope is
+   [-0.0063, 0.0036] h/min -> per 100 min of screen time
+   that is [-0.63, 0.36] h of sleep. It covers
+   zero AND small positive values: the pilot could not detect an effect
+   of the size found in the replication.
+2. Measurement: minutes-of-use and nights-per-week tap different aspects
+   of screen behaviour (intensity vs habit).
+3. Population & context: different universities, countries, schedules;
+   DAU data spans exam periods (where workload dominates), DIU data
+   reflects typical weeks.
+4. Design: DAU paired data isolates within-student week effects
+   (sleep -1.15h in exam week) which cross-sectional data cannot see.
+
+JOINT CONCLUSION
+Across two real datasets there is NO evidence that more bedtime screen
+use is associated with SHORTER sleep; the larger, better-powered sample
+shows a modest POSITIVE association (likely confounded by schedule
+flexibility). The DAU pilot adds what the big dataset cannot: during
+exam weeks sleep drops sharply (-1.15h) through workload, not screens.
