@@ -13,8 +13,7 @@ from statsmodels.stats.diagnostic import het_breuschpagan
 from statsmodels.stats.outliers_influence import OLSInfluence
 from scipy import stats
 
-import os
-FOLDER = os.path.dirname(os.path.abspath(__file__)) + os.sep
+FOLDER = r"C:\Users\masum\Desktop\Vrunda\sleep project\\"
 d = pd.read_csv(FOLDER + "analysis_data.csv")
 x = d["screen_freq"].astype(float)
 y = d["sleep_hours"].astype(float)

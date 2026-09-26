@@ -6,8 +6,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from scipy import stats
 
-import os
-FOLDER = os.path.dirname(os.path.abspath(__file__)) + os.sep
+FOLDER = r"C:\Users\masum\Desktop\Vrunda\sleep project\\"
 d = pd.read_csv(FOLDER + "analysis_data.csv")
 
 S_ORDER = [1, 2, 3, 4, 5]

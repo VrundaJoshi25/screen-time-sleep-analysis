@@ -9,8 +9,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from scipy import stats
 
-import os
-FOLDER = os.path.dirname(os.path.abspath(__file__)) + os.sep
+FOLDER = r"C:\Users\masum\Desktop\Vrunda\sleep project\\"
 
 # --- DAU pilot: real values from the report/notebook ---
 dau = dict(n=30,

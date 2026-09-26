@@ -4,8 +4,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-import os
-FOLDER = os.path.dirname(os.path.abspath(__file__)) + os.sep
+FOLDER = r"C:\Users\masum\Desktop\Vrunda\sleep project\\"
 df = pd.read_csv(FOLDER + "analysis_data.csv")
 
 PLOTS = [  # (raw category column, title, ordered levels)

@@ -13,8 +13,7 @@ import pandas as pd
 import numpy as np
 from scipy import stats
 
-import os
-FOLDER = os.path.dirname(os.path.abspath(__file__)) + os.sep
+FOLDER = r"C:\Users\masum\Desktop\Vrunda\sleep project\\"
 df = pd.read_csv(FOLDER + "student_insomnia_raw.csv")
 
 # ---------------- column map (short names) ----------------

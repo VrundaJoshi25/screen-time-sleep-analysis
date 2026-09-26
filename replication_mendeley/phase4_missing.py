@@ -16,8 +16,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import statsmodels.api as sm
 
-import os
-FOLDER = os.path.dirname(os.path.abspath(__file__)) + os.sep
+FOLDER = r"C:\Users\masum\Desktop\Vrunda\sleep project\\"
 d = pd.read_csv(FOLDER + "analysis_data.csv")
 x = d["screen_freq"].astype(float).copy()
 y = d["sleep_hours"].astype(float)

@@ -15,8 +15,7 @@ import statsmodels.api as sm
 import statsmodels.formula.api as smf
 from statsmodels.miscmodels.ordinal_model import OrderedModel
 
-import os
-FOLDER = os.path.dirname(os.path.abspath(__file__)) + os.sep
+FOLDER = r"C:\Users\masum\Desktop\Vrunda\sleep project\\"
 d = pd.read_csv(FOLDER + "analysis_data.csv")
 out = []
 

@@ -1,52 +1,74 @@
-# Screen Time & Sleep Duration: From a 30-Student Pilot to a 996-Student Replication
+# Screen Time & Sleep — The Complete Study
 
-> Does screen time before bed predict how long students sleep? A stratified pilot survey at DAU (n = 30) — and a full replication on 996 real students (Mendeley Data) — with regression modeling, complete diagnostics, missing-data sensitivity, and causal-DAG reasoning.
+> Does daily screen time predict how long students sleep? A three-act research arc: a 30-student pilot, a powered main study (in data collection), and replication on US national data — plus an external validation on 996 students. Fully reproducible: `src/`, tests, CI, SQL.
 
-## The arc of this project
+![tests](https://github.com/VrundaJoshi25/screen-time-sleep-analysis/actions/workflows/ci.yml/badge.svg)
 
-**Part 1 — DAU pilot (Winter 2026).** Stratified survey of n = 30 DAU students (4 strata), paired exam-week / regular-week responses. Result: screen time showed **no meaningful linear relationship** with sleep duration (R² < 1.1%, p = 0.58) — but the pilot was severely underpowered (~8% power; its own analysis called for n ≈ 711). A unique pilot finding: students sleep **1.15 h less in exam weeks**, with almost no change in screen time → workload, not screens, drives exam-period sleep loss.
+## The arc
 
-**Part 2 — Independent replication (this project).** Analysis of 996 real students ([Student Insomnia & Educational Outcomes Dataset](https://doi.org/10.17632/5mvrx4v62z.2), CC BY 4.0). Result: a **positive** association — more frequent bedtime screen use ↔ *longer* sleep (Spearman ρ = +0.23, p ≈ 2×10⁻¹³; OLS +0.38 h per frequency level, robust SEs; adjusted +0.19 h after caffeine/activity/stress/year/gender). The apparent paradox resolves through a causal DAG: an unmeasured confounder — **schedule flexibility** — plausibly drives both habits.
+| Act | Study | n | Status | Headline |
+|---|---|---|---|---|
+| 1 | **Pilot** (DAU stratified survey, paired exam/regular weeks) | 30 | ✅ done | screen slope ≈ 0, ns — but only ~8% power; exam week −1.15 h sleep (workload-driven) |
+| — | **External validation** (Mendeley student survey) | 996 | ✅ done | ρ = +0.23, +0.38 h per frequency level (positive; confounder-adjusted +0.19) |
+| 2 | **Main study** (pre-registered, quota 25×4, phone-log screen time) | ~100 | 🔄 collecting | designed & powered (87% at r = 0.3); form ready |
+| 3 | **National replication** (NHANES 2015-16, survey-weighted) | 5,944 | ✅ done | +1.3 min sleep per screen-hour (p = .0005) — practically zero; 18–29 y: ≈ 0, ns |
 
-**Full write-up: [REPORT.md](REPORT.md)** — data quality screening, EDA, correlations, regression, diagnostics (residuals / Cook's distance / group influence), confounding control, MCAR–MAR–MNAR missing-data simulation on real data, causal DAG, and the cross-study comparison.
-
-## Key results at a glance
-
-| | DAU pilot (n = 30) | Replication (n = 996) |
-|---|---|---|
-| Screen → sleep slope | −0.0014 (p = 0.58) | +0.383 h/level (p = 2×10⁻³⁰) |
-| 95% CI | [−0.63, +0.36] h / 100 min | [+0.28, +0.49] h/level |
-| Adjusted | ≈ 0 (ns) | +0.185 h/level (p = 8×10⁻⁴) |
-| Power | ~8% | >99% |
-| Exam-week effect | sleep −1.15 h (workload-driven) | — |
-
-Neither study supports the claim that bedtime screen use shortens sleep; the powered replication finds a modest positive association, best explained by schedule flexibility rather than a causal screen effect.
+**The evidence so far, in one sentence:** across three real datasets there is no
+evidence that screen time costs students sleep — the powered national estimate is
+a practically negligible **+1.3 minutes of sleep per hour of daily screen time**,
+and the largest effects appear only where confounding (schedule flexibility) can operate.
 
 ## Repository structure
 
-| Path | Contents |
-|---|---|
-| `REPORT.md` | Full replication report (all phases, figures, discussion) |
-| `notebooks/` | DAU pilot analysis notebook (SLR/MLR, diagnostics, MCAR/MAR/MNAR) |
-| `data/` | Pilot data (anonymized before committing — see `data/README.md`) |
-| `student_insomnia_raw.csv` | Replication raw data (996 × 16, Mendeley, CC BY 4.0) |
-| `analysis_data.csv`, `codebook.txt` | Coded replication dataset |
-| `prepare_data.py`, `phase1_*.py` … `phase6_*.py` | Replication pipeline, run in order |
-| `fig*.png` | All figures |
-| `phase*_results.txt` | Numeric outputs of each phase |
-
-## How to run
-
-```bash
-python -m venv .venv
-.venv\Scripts\activate        # Windows
-pip install -r requirements.txt
-python prepare_data.py         # builds analysis_data.csv
-python phase1_eda.py           # then phase1_eda2, phase2_core, ... in order
+```
+├── notebooks/                    Act 1 pilot notebook (SLR/MLR, diagnostics, MCAR/MAR/MNAR)
+├── replication_mendeley/         External validation sub-project (996 students): REPORT.md,
+│                                 full pipeline (prepare_data → phase6), figures, results
+├── docs/
+│   ├── preregistration.md        Act 2 hypotheses + analysis plan, fixed BEFORE data collection
+│   ├── google_form_spec.md       copy-paste-ready questionnaire (12 questions, quota plan)
+│   ├── nhanes_dictionary.md      NHANES variable dictionary + cycle-choice rationale
+│   └── nhanes_quick_results.txt  weighted national estimates
+├── data/
+│   ├── raw/nhanes/               NHANES 2015-2016 XPT files (never edited)
+│   └── clean/                    nhanes_work.csv (built by src/nhanes_build.py), SQLite db
+├── src/                          reusable code: cleaning.py (main study), nhanes pipeline
+├── tests/                        pytest suite for cleaning rules (5 tests)
+├── sql/                          analysis.sql (main study), analysis_nhanes.sql, run_sql.py
+├── .github/workflows/ci.yml      tests run on every push (badge above)
+└── requirements.txt              pinned versions
 ```
 
-## Tools & data citation
+## Key results (all numbers traceable to files above)
 
-Python, pandas, NumPy, statsmodels, SciPy, Matplotlib.
+**Act 3 — NHANES 2015-16** (weighted, adults 18+, n = 5,944): sleep = **+0.022 h per
+screen-hour** (robust 95% CI [+0.010, +0.034]; adjusted for age/gender +0.023). Young
+adults 18–29 (n = 1,244): +0.014 h, CI [−0.013, +0.042], p = 0.31 — the whole CI sits
+inside the pre-registered equivalence margin (±10 min/h): **a national equivalence result.**
 
-Abdullah, A. *Student Insomnia and Educational Outcomes Dataset.* Mendeley Data, V2 (2024). DOI: [10.17632/5mvrx4v62z.2](https://doi.org/10.17632/5mvrx4v62z.2) — CC BY 4.0.
+**External validation** (996 students): positive association (ρ = +0.23) that halves
+after adjustment (+0.383 → +0.185 h/level) — consistent with confounding by
+*schedule flexibility* (see the DAG in `replication_mendeley/`).
+
+**Act 1 pilot** (30 students, paired): slope ≈ 0 (p = 0.58/0.90); exam-week sleep
+drops 1.15 h while screen time barely moves.
+
+## Reproduce
+
+```bash
+python -m venv .venv && .venv\Scripts\activate
+pip install -r requirements.txt
+python -m pytest tests/ -q            # cleaning-rule tests
+python sql/run_sql.py                 # SQL layer on NHANES (GROUP BY / CTE / window)
+python src/nhanes_build.py            # rebuild NHANES working data + weighted models
+cd replication_mendeley && python prepare_data.py   # external-validation pipeline
+```
+
+## Data sources
+
+1. Lamba, Garg, Singh, Joshi — *DAU pilot survey* (IT590, Winter 2026), n = 30.
+2. Abdullah, A. — *Student Insomnia & Educational Outcomes Dataset*, Mendeley Data,
+   DOI 10.17632/5mvrx4v62z.2 (CC BY 4.0), n = 996.
+3. CDC/NCHS — *NHANES 2015-2016* (DEMO_I, SLQ_I, PAQ_I), public use,
+   https://wwwn.cdc.gov/nchs/nhanes/ (cycle chosen because it retains the dedicated
+   TV/computer screen-time questions PAQ710/PAQ715).

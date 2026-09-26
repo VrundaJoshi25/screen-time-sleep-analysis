@@ -8,8 +8,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 
-import os
-FOLDER = os.path.dirname(os.path.abspath(__file__)) + os.sep
+FOLDER = r"C:\Users\masum\Desktop\Vrunda\sleep project\\"
 
 fig, ax = plt.subplots(figsize=(11, 7.5))
 ax.set_xlim(0, 10); ax.set_ylim(0, 10); ax.axis("off")
